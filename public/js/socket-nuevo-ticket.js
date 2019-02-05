@@ -1,5 +1,7 @@
 var socket = io();
 
+var label = $('#lblNuevoTicket');
+
 socket.on('connect', function() {
     console.log('Conectado al servidor');
 });
@@ -11,18 +13,18 @@ socket.on('disconnect', function() {
 
 });
 
+$('button').on('click', function() {
+    socket.emit('siguienteTicket', null, function(siguienteTicket) {
+        label.text(siguienteTicket);
+    });
+})
 
 // Enviar información
-socket.emit('enviarMensaje', {
-    usuario: 'Fernando',
-    mensaje: 'Hola Mundo'
-}, function(resp) {
-    console.log('respuesta server: ', resp);
-});
+
 
 // Escuchar información
-socket.on('enviarMensaje', function(mensaje) {
+socket.on('estadoActual', function(resp) {
 
-    console.log('Servidor:', mensaje);
+    label.text(resp.actual);
 
 });
