@@ -41,6 +41,11 @@ io.on('connection', (client) => {
         let siguiente = ticketControl.siguiente();
         console.log(siguiente);
         callback(siguiente);
+
+        client.broadcast.emit('ultimos4', {
+            ultimos4: ticketControl.getUltimos4()
+        });
+
     });
 
 });
